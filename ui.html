@@ -1,0 +1,152 @@
+<h1>Instructions</h2>
+
+<ol>
+  <li>
+    Find the <b>project ID</b> at <a href="https://app.lokalise.com/projects" target="_blank">https://app.lokalise.com/projects</a>, click the "more" circle button and select "settings" on the pop-up menu.
+  </li>
+  <li>
+    Find the <b>API token</b> at <a href="https://app.lokalise.com/profile" target="_blank">https://app.lokalise.com/profile</a>, navigate to "API tokens" and generate/copy a token.
+  </li>
+  <li>
+    Name the text layers you want to have translated using the pattern <b>{{key_name}}+{{language_ISO}}</b>.
+  </li>
+  <li>
+    Click the "update" button 🤘
+  </li>
+</ol>
+
+<label for="lokalise-project-id">Project ID</label>
+<input id="lokalise-project-id" type="text" placeholder="Lokalise Project ID">
+
+<label for="lokalise-api-token">API token</label>
+<input id="lokalise-api-token" type="text" placeholder="User account API token">
+
+<footer>
+  <button id="update">Update translations</button>
+</footer>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --size-base: 8px;
+    --size-s: 4px;
+    --size-m: 12px;
+    --size-l: 24px;
+    --radius-base: 2px;
+    --radius-button: 6px;
+    --element-height: 34px;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--size-l);
+    background: var(--figma-color-bg);
+    color: var(--figma-color-text);
+    font-family: Inter, San Francisco, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 18px;
+  }
+
+  h1 {
+    margin: 0;
+    margin-bottom: var(--size-l);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--figma-color-text-brand);
+  }
+
+  ul, ol {
+    margin: 0;
+    margin-bottom: var(--size-l);
+    padding: 0;
+    list-style-position: inside;
+  }
+
+  li {
+    margin-bottom: var(--size-m);
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    margin-bottom: var(--size-base);
+    font-size: .9em;
+    font-weight: 600;
+  }
+
+  input {
+    height: var(--element-height);
+    margin-bottom: var(--size-m);
+    padding: var(--size-s) var(--size-base);
+    background: transparent;
+    border: 1px solid var(--figma-color-border);
+    border-radius: var(--radius-base);
+    color: var(--figma-color-text);
+    font-size: 1em;
+    outline: none;
+  }
+
+  input::placeholder {
+    color: var(--figma-color-text-disabled);
+  }
+  
+  input:hover {
+    border-color: var(--figma-color-border-onselected);
+  }
+
+  input:active,
+  input:focus {
+    border-color: var(--figma-color-border-selected);
+    outline: 1px solid var(--figma-color-border-selected);
+  }
+
+  button {
+    height: var(--element-height);
+    padding: var(--size-s) var(--size-m);
+    background: var(--figma-color-bg-brand);
+    border-radius: var(--radius-button);
+    color: var(--figma-color-text);
+    font-size: 1em;
+    font-weight: 400;
+    border: none;
+  }
+
+  button:active {
+    background: var(--figma-color-bg-brand-pressed);
+  }
+
+  button:focus {
+    outline: 2px solid var(--figma-color-border-brand-strong);
+  }
+
+  footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: var(--size-l);
+    background: var(--figma-color-bg);
+    border-top: 1px solid var(--figma-color-border);
+  }
+
+  footer button {
+    width: 100%;
+  }
+
+</style>
+
+<script>
+  
+  document.getElementById('update').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'update' } }, '*')
+  }
+  
+  </script>

@@ -1,0 +1,10 @@
+{
+  "name": "Transfer Galaxy — Lokalise",
+  "id": "1202964353474630895",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html"
+}
