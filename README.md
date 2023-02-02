@@ -1,6 +1,6 @@
 # Transfer Galaxy X Lokalise Figma plugin
 
-This plugin will check Figma layers on the current page that are name using the convention **{{key_name}}+{{language_ISO}}**, search the **Lokalise API** and replace the text with the correct translation.
+This plugin will check **Figma** layers on the current page that are name using the convention **{{key_name}}+{{language_ISO}}**, search the **Lokalise API** and replace the text with the correct translation.
 ## Build instructions
 
 Below are the steps to get your plugin running. You can also find instructions at:
