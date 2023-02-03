@@ -15,11 +15,11 @@
   </li>
 </ol>
 
-<label for="lokalise-project-id">Project ID</label>
-<input id="lokalise-project-id" type="text" placeholder="Lokalise Project ID">
+<label for="lokalise-project">Project ID</label>
+<input id="lokalise-project" type="text" placeholder="Lokalise Project ID">
 
-<label for="lokalise-api-token">API token</label>
-<input id="lokalise-api-token" type="text" placeholder="User account API token">
+<label for="lokalise-token">API token</label>
+<input id="lokalise-token" type="text" placeholder="User account API token">
 
 <footer>
   <button id="update">Update translations</button>
@@ -60,6 +60,10 @@
 
   a {
     color: var(--figma-color-text-brand);
+  }
+
+  a:focus {
+    outline: 2px solid var(--figma-color-border-brand-strong);
   }
 
   ul, ol {
@@ -144,9 +148,49 @@
 </style>
 
 <script>
+
+  // Element variables
+  const inputProject = document.getElementById('lokalise-project');
+  const inputToken = document.getElementById('lokalise-token');
+  const updateButton = document.getElementById('update');
+
+  // Set the focus on the first plugin UI element (accessibility!!!)
+  window.focus();
+
+  // Listen for value change on the project input
+  inputProject.onchange = () => {
+    let projectValue = inputProject.value;
+
+    parent.postMessage({ pluginMessage: { 
+      type: 'project',
+      projectValue
+    } }, '*')
+  }
+
+  // Listen for value change on the token input
+  inputToken.onchange = () => {
+    let tokenValue = inputToken.value;
+
+    parent.postMessage({ pluginMessage: { 
+      type: 'token',
+      tokenValue
+    } }, '*')
+  }
   
-  document.getElementById('update').onclick = () => {
+  // Listen for clicks on the update button
+  updateButton.onclick = () => {
     parent.postMessage({ pluginMessage: { type: 'update' } }, '*')
+  }
+
+  // Receive data from the plugin
+  onmessage = (event) => {
+    if (event.data.pluginMessage.type === 'project') {
+      inputProject.value = event.data.pluginMessage.value;
+    }
+
+    if (event.data.pluginMessage.type === 'token') {
+      inputToken.value = event.data.pluginMessage.value;
+    }
   }
   
   </script>
