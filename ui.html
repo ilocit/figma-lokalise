@@ -192,5 +192,31 @@
       inputToken.value = event.data.pluginMessage.value;
     }
   }
+
+  // Test Lokalise settings
+  const lokaliseFetchURL = "https://corsproxy.io/?" + "https://api.lokalise.com/api2/projects/XXXXXXXXXX/keys?include_translations=1";
+
+  const lokaliseFetchOptions = {
+    method: "GET",
+    mode: "cors",
+    headers: {
+        accept: "application/json",
+        "X-Api-Token": "XXXXXXX"
+    }
+  };
+
+  // Fetch translations data from the Lokalise API
+  const fetchTranslationsData = () => {
+    fetch(lokaliseFetchURL, lokaliseFetchOptions)
+    .then((response) => response.json())
+    .then((response) => {
+        console.log(response)
+
+        // figma.clientStorage.setAsync('lokalise-keys', response);
+    })
+    .catch((err) => console.error(err));
+  }
+
+  fetchTranslationsData();
   
   </script>

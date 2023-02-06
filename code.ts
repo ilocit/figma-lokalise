@@ -6,6 +6,11 @@
 // VARIABLE DECLARATION
 /////////////////////////////////
 
+// Lokalise global variables
+let lokaliseProjectID = "";
+let lokaliseAPIToken = "";
+
+// The array of layers that are named to be translated
 let translatableLayersArray = {};
 
 /////////////////////////////////
@@ -19,10 +24,11 @@ figma.showUI(__html__);
 figma.showUI(__html__, { themeColors: true, /* other options */ });
 
 // Resize the UI modal
-figma.ui.resize(360, 560)
+figma.ui.resize(360, 560);
 
 // If there is a project-id key on the clientStorage set it on the input 
 figma.clientStorage.getAsync('project-id').then(result => {
+  // Send the value to the plugin UI
   figma.ui.postMessage({
     type: "project",
     value: result
@@ -31,6 +37,7 @@ figma.clientStorage.getAsync('project-id').then(result => {
 
 // If there is a api-token key on the clientStorage set it on the input 
 figma.clientStorage.getAsync('api-token').then(result => {
+  // Send the value to the plugin UI
   figma.ui.postMessage({
     type: "token",
     value: result
@@ -42,13 +49,23 @@ figma.clientStorage.getAsync('api-token').then(result => {
 // posted message.
 figma.ui.onmessage = msg => {
   if (msg.type === 'project') {
+    // Save the project ID to the plugin local storage
     figma.clientStorage.setAsync('project-id', msg.projectValue);
-    // console.log(msg.projectValue);
+
+    // Store it on the variable
+    if (!lokaliseProjectID) {
+      lokaliseProjectID = msg.projectValue;
+    }
   }
 
   if (msg.type === 'token') {
+    // Save the API token to the plugin local storage
     figma.clientStorage.setAsync('api-token', msg.tokenValue);
-    // console.log(msg.tokenValue);
+
+    // Store it on the variable
+    if (!lokaliseAPIToken) {
+      lokaliseAPIToken = msg.tokenValue;
+    }
   }
 
   if (msg.type === 'update') {
@@ -56,6 +73,9 @@ figma.ui.onmessage = msg => {
     translatableLayersArray = figma.currentPage.findAll(node => {
       return node.type === "TEXT" && node.name.includes('}}+{');
     });
+
+    // Get the translations from Lokalise
+    lokaliseMagic();
   }
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will
@@ -64,10 +84,34 @@ figma.ui.onmessage = msg => {
 };
 
 /////////////////////////////////
-// FUNCTIONS
+// LOKALISE STUFF
 /////////////////////////////////
 
+// const lokaliseFetchURL =`https://cors-anywhere.herokuapp.com/https://api.lokalise.com/api2/projects/${lokaliseProjectID}/keys?include_translations=1`;
 
+// const lokaliseFetchOptions = {
+//   method: "GET",
+//   mode: "cors",
+//   headers: {
+//       accept: "application/json",
+//       "X-Api-Token": `${lokaliseAPIToken}`
+//   }
+// };
+
+const lokaliseMagic = () => {
+  // console.log('lokaliseMagic has ran!')
+
+  // fetch(lokaliseFetchURL, lokaliseFetchOptions)
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //           // window.localStorage.setItem(
+  //           //     "lokaliseKeyList",
+  //           //     JSON.stringify(response)
+  //           // );
+  //           console.log(response)
+  //       })
+  //       .catch((err) => console.error(err));
+};
 
 /////////////////////////////////
 // FUNCTIONS
